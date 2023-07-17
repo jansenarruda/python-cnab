@@ -10,6 +10,7 @@ BANK = {
     '0851': bancos.cecred,
     '033': bancos.santander,
     '748': bancos.sicredi,
+    '989': bancos.safrausa,
 }
 
 CNAB_CODE = {

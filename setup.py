@@ -3,10 +3,10 @@ from setuptools import setup, find_packages
 
 setup(
     name='python3-cnab',
-    version='1.0.11',
-    author='Trustcode',
+    version='1.0.18',
+    author='Jansen Arruda ',
     author_email='suporte@trustcode.com.br',
-    url='https://github.com/Trust-Code/python-cnab',
+    url='https://github.com/jansenarruda/python-cnab',
     keywords=['cnab', 'cnab240'],
     packages=find_packages(exclude=['*tests*']),
     include_package_data=True,
@@ -26,6 +26,7 @@ setup(
             'bancos/santander/specs/*.json',
             'bancos/sicoob/specs/*.json',
             'bancos/sicredi/specs/*.json',
+            'bancos/safrausa/specs/*.json',
         ],
     },
     install_requires=[
@@ -34,7 +35,7 @@ setup(
     license='MIT',
     description='Lib para gerar arquivo CNAB - Integração bancária',
     long_description=open('README.md', 'r').read(),
-    download_url='https://github.com/Trust-Code/python-cnab',
+    download_url='https://github.com/jansenarruda/python-cnab',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Plugins',

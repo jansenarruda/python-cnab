@@ -30,7 +30,7 @@ class Evento(object):
         return object.__getattribute__(self, name)
 
     def __str__(self):
-        return '\r\n'.join(str(seg) for seg in self._segmentos)
+        return '\n'.join(str(seg) for seg in self._segmentos)
 
     def __len__(self):
         return len(self._segmentos)
@@ -114,7 +114,7 @@ class Lote(object):
         result.extend(str(evento) for evento in self._eventos)
         if self.trailer is not None:
             result.append(str(self.trailer))
-        return '\r\n'.join(result)
+        return '\n'.join(result)
 
     def __len__(self):
         if self.trailer is not None and hasattr(self.trailer, 'quantidade_registros'):
@@ -313,6 +313,15 @@ class Arquivo(object):
             if lote.header.servico_servico == codigo_servico:
                 return lote
 
+    def encontrar_lote_ext(self, codigo_servico):
+        for lote in self.lotes:
+            # FIXME
+            if codigo_servico == 40:
+                return lote
+            #
+            if lote.header.servico_servico == codigo_servico:
+                return lote
+
     # Implementação para Pag_For
     def incluir_pagamento(self, **kwargs):
         # 20: PAGTO FORNECEDORES
@@ -331,5 +340,27 @@ class Arquivo(object):
             self.adicionar_lote(lote_pag)
 
         lote_pag.adicionar_evento(evento)
+        # Incrementar numero de registros no trailer do arquivo
+        self.trailer.totais_quantidade_registros += len(evento)
+
+# Extratos
+    def incluir_extrato(self, header, trailer, **kwargs):
+        # 1 eh o codigo de cobranca
+        codigo_evento = 40
+        evento = Evento(self.banco, codigo_evento)
+
+
+        seg_e = self.banco.registros.SegmentoE(**kwargs)
+        evento.adicionar_segmento(seg_e)
+
+        lote_extrato = self.encontrar_lote_ext(codigo_evento)
+
+        if lote_extrato is None:
+            header = self.banco.registros.HeaderLoteExtrato(**header)
+            trailer = self.banco.registros.TrailerLoteExtrato(**trailer)
+            lote_extrato = Lote(self.banco, header, trailer)
+            self.adicionar_lote(lote_extrato)
+
+        lote_extrato.adicionar_evento(evento)
         # Incrementar numero de registros no trailer do arquivo
         self.trailer.totais_quantidade_registros += len(evento)
