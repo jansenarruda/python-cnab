@@ -316,8 +316,8 @@ class Arquivo(object):
     def encontrar_lote_ext(self, codigo_servico):
         for lote in self.lotes:
             # FIXME
-            if codigo_servico == 40:
-                return lote
+            #if codigo_servico == 40:
+            #    return lote
             #
             if lote.header.servico_servico == codigo_servico:
                 return lote
@@ -346,7 +346,7 @@ class Arquivo(object):
 # Extratos
     def incluir_extrato(self, header, trailer, **kwargs):
         # 1 eh o codigo de cobranca
-        codigo_evento = 40
+        codigo_evento = 4
         evento = Evento(self.banco, codigo_evento)
 
 

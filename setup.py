@@ -3,9 +3,9 @@ from setuptools import setup, find_packages
 
 setup(
     name='python3-cnab',
-    version='1.0.18',
+    version='1.0.20',
     author='Jansen Arruda ',
-    author_email='suporte@trustcode.com.br',
+    #author_email='suporte@oldmila.com.br',
     url='https://github.com/jansenarruda/python-cnab',
     keywords=['cnab', 'cnab240'],
     packages=find_packages(exclude=['*tests*']),
